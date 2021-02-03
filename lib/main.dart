@@ -109,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   }
 
   List<Widget> _buildLandscapeContent(Widget transactionListWidget, MediaQueryData mediaQuery, PreferredSizeWidget appBar, double size) {
-    return [
+    return <Widget>[
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget> [
@@ -124,7 +124,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
           ),
         ],
       ),
-      _showChart ? _buildPortraitContent(transactionListWidget, mediaQuery, appBar, 0.7) : transactionListWidget
+      if (_showChart) ..._buildPortraitContent(null, mediaQuery, appBar, 0.7),
+      if (!_showChart) transactionListWidget,
     ];
   }
 
@@ -134,7 +135,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         height: (mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top) * size,
         child: Chart(_recentTransactions),
       ),
-      transactionListWidget
+      if(transactionListWidget != null) transactionListWidget,
     ];
   }
 
